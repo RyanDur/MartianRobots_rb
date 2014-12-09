@@ -2,12 +2,13 @@ require 'spec_helper'
 require 'mars'
 require 'position'
 require 'robot'
+require 'lang/max'
+include Max
 
 describe Mars do
-
   context '#setup' do
     it 'should not be wider than 50' do
-      expect { subject.setup(51, 3) }.to raise_error ArgumentError
+      expect { subject.setup(MAX_GRID_SIZE + 1, 3) }.to raise_error ArgumentError
     end
 
     it 'should not be thinner than 0' do
@@ -15,7 +16,7 @@ describe Mars do
     end
 
     it 'should not be taller than 50' do
-      expect { subject.setup(1, 53) }.to raise_error ArgumentError
+      expect { subject.setup(1, MAX_GRID_SIZE + 3) }.to raise_error ArgumentError
     end
 
     it 'should not be shorter than 0' do
@@ -79,6 +80,12 @@ describe Mars do
       allow(loc).to receive(:x).and_return(1, -1)
       subject.move('FFR')
       expect(subject.get_robot_position).to eq('hello LOST')
+    end
+
+    context 'instructions' do
+      it 'should not be able to input an invalid instruction size' do
+        expect {subject.move('F' * MAX_INSTRUCTION_SIZE) }.to raise_error ArgumentError
+      end
     end
   end
 end
