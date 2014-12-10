@@ -27,8 +27,9 @@ class Mars
   def move(instructions)
     raise ArgumentError if instructions.size >= MAX_INSTRUCTION_SIZE
     instructions.each_char do |instruction|
-      @robot.move(instruction)
-      (@lost = true) and break if @out_of_bounds.(@robot.location.x, @robot.location.y)
+      robot = @robot.move(instruction)
+      (@lost = true) and break if @out_of_bounds.(robot.location.x, robot.location.y)
+      @robot = robot
     end
   end
 
