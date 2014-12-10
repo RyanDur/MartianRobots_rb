@@ -22,6 +22,30 @@ describe Mars do
     it 'should not be shorter than 0' do
       expect { subject.setup(1, -3) }.to raise_error ArgumentError
     end
+
+    context 'when resetting mars' do
+      before {subject.setup(7, 5)}
+
+      it "should allow to reset and maintain a size smaller than #{MAX_GRID_SIZE}" do
+        expect { subject.setup(8, 3) }.not_to raise_error
+      end
+
+      it "should not be wider than #{MAX_GRID_SIZE}" do
+        expect { subject.setup(MAX_GRID_SIZE + 1, 3) }.to raise_error ArgumentError
+      end
+
+      it 'should not be thinner than 0' do
+        expect { subject.setup(-1, 3) }.to raise_error ArgumentError
+      end
+
+      it "should not be taller than #{MAX_GRID_SIZE}" do
+        expect { subject.setup(1, MAX_GRID_SIZE + 3) }.to raise_error ArgumentError
+      end
+
+      it 'should not be shorter than 0' do
+        expect { subject.setup(1, -3) }.to raise_error ArgumentError
+      end
+    end
   end
 
   context '#set_robot' do

@@ -5,14 +5,13 @@ class Mars
 
   def initialize
     @boundary = lambda { |max, coord| coord > max || coord < 0 }
-    set_boundaries(@boundary.curry.(MAX_GRID_SIZE), @boundary.curry.(MAX_GRID_SIZE))
   end
 
   def setup(x, y)
+    set_boundaries(@boundary.curry.(MAX_GRID_SIZE), @boundary.curry.(MAX_GRID_SIZE))
     raise ArgumentError if @out_of_bounds.(x, y)
     set_boundaries(@boundary.curry.(x), @boundary.curry.(y))
   end
-
 
   def set_robot(robot)
     raise ArgumentError if @out_of_bounds.(robot.location.x, robot.location.y)
