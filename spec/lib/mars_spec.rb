@@ -83,10 +83,11 @@ describe Mars do
       let(:ins2) {double('Instruction')}
       let(:ins3) {double('Instruction')}
       let(:instructions) {[ins1, ins2, ins3]}
+      message = 'hello'
 
       before(:each) {
         allow(robot).to receive(:move).with(any_args).and_return(robot)
-        allow(robot).to receive(:to_s).and_return('hello')
+        allow(robot).to receive(:to_s).and_return(message)
         subject.setup(5, 3)
         subject.set_robot(robot)
       }
@@ -100,20 +101,28 @@ describe Mars do
 
       context 'when lost' do
         let(:loc2) { double('Position', x: -1, y: 1) }
-        let(:robot2) { double('Robot', location: loc2) }
 
         it 'should be able to tell if a robot is lost' do
           allow(loc).to receive(:x).and_return(1, -1)
           subject.move(instructions)
-          expect(subject.report_position).to eq('hello LOST')
+          expect(subject.report_position).to eq("#{message} LOST")
         end
 
         it 'should report the last position before lost' do
-          allow(robot2).to receive(:move).with('F')
-          allow(robot).to receive(:move).and_return(robot2)
-          allow(robot2).to receive(:to_s).and_return('goodbye')
+          allow(robot).to receive(:location).and_return(loc, loc, loc, loc2)
           subject.move(instructions)
-          expect(subject.report_position).to eq('hello LOST')
+          expect(subject.report_position).to eq("#{message} LOST")
+        end
+
+        it 'should leave a scent behind that does not allow other robots to follow' do
+          allow(robot).to receive(:location).and_return(loc, loc, loc, loc2)
+          subject.move(instructions)
+
+          allow(robot).to receive(:location).and_return(loc, loc, loc, loc2)
+          subject.set_robot(robot)
+          subject.move(instructions)
+
+          expect(subject.report_position).to eq(message)
         end
       end
     end
