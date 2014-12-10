@@ -19,16 +19,16 @@ class Mars
     @lost = false
   end
 
-  def get_robot_position
+  def report_position
     "#{@robot} #{@lost ? 'LOST' : ''}".strip
   end
 
   def move(instructions)
     raise ArgumentError if instructions.size >= MAX_INSTRUCTION_SIZE
-    instructions.each_char do |instruction|
-      robot = @robot.move(instruction)
-      (@lost = true) and break if @out_of_bounds.(robot.location.x, robot.location.y)
-      @robot = robot
+    ins = instructions.chars
+    until ins.empty? or @lost
+      robot = @robot.move(ins.shift)
+      @out_of_bounds.(robot.location.x, robot.location.y) ? @lost = true : @robot = robot
     end
   end
 

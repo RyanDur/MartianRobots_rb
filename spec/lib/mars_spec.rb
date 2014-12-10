@@ -99,7 +99,7 @@ describe Mars do
         it 'should be able to tell if a robot is lost' do
           allow(loc).to receive(:x).and_return(1, -1)
           subject.move('FFR')
-          expect(subject.get_robot_position).to eq('hello LOST')
+          expect(subject.report_position).to eq('hello LOST')
         end
 
         it 'should report the last position before lost' do
@@ -107,7 +107,7 @@ describe Mars do
           allow(robot).to receive(:move).and_return(robot2)
           allow(robot2).to receive(:to_s).and_return('goodbye')
           subject.move('FFR')
-          expect(subject.get_robot_position).to eq('hello LOST')
+          expect(subject.report_position).to eq('hello LOST')
         end
       end
     end
