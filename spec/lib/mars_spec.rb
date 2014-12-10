@@ -2,6 +2,7 @@ require_relative '../spec_helper'
 require 'mars'
 require 'position'
 require 'robot'
+require 'instruction'
 require 'lang/max'
 include Max
 
@@ -78,18 +79,23 @@ describe Mars do
     context 'instructions' do
       let(:loc) { double('Position', x: 1, y: 1) }
       let(:robot) { double('Robot', location: loc) }
+      let(:ins1) {double('Instruction')}
+      let(:ins2) {double('Instruction')}
+      let(:ins3) {double('Instruction')}
+      let(:instructions) {[ins1, ins2, ins3]}
+
       before(:each) {
-        allow(robot).to receive(:move).with('F').and_return(robot)
-        allow(robot).to receive(:move).with('R').and_return(robot)
+        allow(robot).to receive(:move).with(any_args).and_return(robot)
         allow(robot).to receive(:to_s).and_return('hello')
         subject.setup(5, 3)
         subject.set_robot(robot)
       }
 
       it 'should be able to execute' do
-        expect(robot).to receive(:move).ordered.with('F').twice
-        expect(robot).to receive(:move).ordered.with('R')
-        subject.move('FFR')
+        expect(robot).to receive(:move).ordered.with(ins1)
+        expect(robot).to receive(:move).ordered.with(ins2)
+        expect(robot).to receive(:move).ordered.with(ins3)
+        subject.move(instructions)
       end
 
       context 'when lost' do
@@ -98,7 +104,7 @@ describe Mars do
 
         it 'should be able to tell if a robot is lost' do
           allow(loc).to receive(:x).and_return(1, -1)
-          subject.move('FFR')
+          subject.move(instructions)
           expect(subject.report_position).to eq('hello LOST')
         end
 
@@ -106,7 +112,7 @@ describe Mars do
           allow(robot2).to receive(:move).with('F')
           allow(robot).to receive(:move).and_return(robot2)
           allow(robot2).to receive(:to_s).and_return('goodbye')
-          subject.move('FFR')
+          subject.move(instructions)
           expect(subject.report_position).to eq('hello LOST')
         end
       end

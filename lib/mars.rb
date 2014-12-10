@@ -25,9 +25,8 @@ class Mars
 
   def move(instructions)
     raise ArgumentError if instructions.size >= MAX_INSTRUCTION_SIZE
-    ins = instructions.chars
-    until ins.empty? or @lost
-      robot = @robot.move(ins.shift)
+    until instructions.empty? or @lost
+      robot = @robot.move(instructions.shift)
       @out_of_bounds.(robot.location.x, robot.location.y) ? @lost = true : @robot = robot
     end
   end
