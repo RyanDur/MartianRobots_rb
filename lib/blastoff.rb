@@ -1,9 +1,9 @@
 require_relative 'instructions'
 require_relative 'mars'
-require_relative 'robots'
+require_relative 'robot'
+require_relative 'position'
 
 mars = Mars.new
-robots = Robots.new
 ins = Instructions.new
 stop = false
 
@@ -13,11 +13,12 @@ mars.setup(x.to_i, y.to_i)
 until stop
   puts 'where would you like to place the robot'
   x, y, orientation = gets.split
-  mars.set_robot(robots.create(x.to_i, y.to_i, orientation))
+  mars.set_robot(Robot.new(Position.new(x.to_i, y.to_i, orientation.upcase)))
   puts 'please input instructions'
   instructions = gets
-  mars.move(ins.create(instructions.strip))
+  mars.move(ins.create(instructions.upcase.strip))
   puts mars.report_position
   puts 'would you like to stop?'
-  stop = true if 'yes' == gets
+  answer = gets
+  stop = true if 'y' == answer[0].downcase
 end
