@@ -2,7 +2,7 @@ require_relative '../spec_helper'
 require 'mars'
 require 'position'
 require 'robot'
-require 'instruction'
+require 'instructions/F'
 require 'lang/max'
 include Max
 
@@ -86,9 +86,9 @@ describe Mars do
     context 'instructions' do
       let(:loc) { double('Position', x: 1, y: 1) }
       let(:robot) { double('Robot', position: loc) }
-      let(:ins1) {double('Instruction')}
-      let(:ins2) {double('Instruction')}
-      let(:ins3) {double('Instruction')}
+      let(:ins1) {double('F')}
+      let(:ins2) {double('F')}
+      let(:ins3) {double('F')}
       let(:instructions) {[ins1, ins2, ins3]}
       message = 'hello'
 

@@ -1,11 +1,11 @@
 require_relative '../spec_helper'
 require 'robot'
 require 'position'
-require 'instruction'
+require 'instructions/R'
 
 describe Robot do
   let(:position) { double('Position') }
-  let(:instruction) { double('Instruction') }
+  let(:instruction) { double('R') }
   let(:robot) { Robot.new(position) }
 
   it 'should be able to execute an instruction' do
