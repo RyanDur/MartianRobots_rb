@@ -6,7 +6,9 @@ class Instructions
   def create(instructions)
     begin
       instructions.chars.map { |instruction| Object::const_get(instruction).new }
-    rescue NameError => _
+    rescue NoMethodError => _
+      raise ArgumentError
+    rescue  NameError => _
       raise ArgumentError
     end
   end

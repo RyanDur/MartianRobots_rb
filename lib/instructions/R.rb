@@ -1,4 +1,4 @@
-require 'lang/compass'
+require_relative '../lang/compass'
 
 class R
   include Compass

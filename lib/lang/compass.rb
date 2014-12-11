@@ -1,10 +1,10 @@
 module Compass
   NORTH = 'N'
-  WEST = 'W'
-  SOUTH = 'S'
   EAST = 'E'
+  SOUTH = 'S'
+  WEST = 'W'
 
   def Compass.constants
-    [NORTH, WEST, SOUTH, EAST].freeze
+    [NORTH, EAST, SOUTH, WEST].freeze
   end
 end

@@ -1,4 +1,4 @@
-require 'lang/max'
+require_relative 'lang/max'
 
 class Mars
   include Max
@@ -17,27 +17,35 @@ class Mars
 
   def set_robot(robot)
     if @out_of_bounds.(robot.position.x, robot.position.y)
-      @lost = true
-      @scents.push(@robot || robot)
+      set_lost(true)
+      @scents.push(robot.position)
     else
-      @lost = false
+      set_lost(false)
       @robot = robot
     end
   end
 
   def report_position
-    "#{@robot} #{@lost ? 'LOST' : ''}".strip
+    "#{@robot} #{@lost}".strip
   end
 
   def move(instructions)
     raise ArgumentError if instructions.size >= MAX_INSTRUCTION_SIZE
-    until instructions.empty? or @lost
+    until instructions.empty? || lost?
       robot = @robot.move(instructions.shift)
-      set_robot(robot) unless @scents.include? robot
+      set_robot(robot) unless @scents.include? robot.position
     end
   end
 
   private
+
+  def lost?
+    @lost == 'LOST'
+  end
+
+  def set_lost(lost)
+    lost ? @lost = 'LOST' : @lost = nil
+  end
 
   def set_boundaries(max_width, max_height)
     @out_of_bounds = lambda { |x, y| max_width.(x) || max_height.(y) }

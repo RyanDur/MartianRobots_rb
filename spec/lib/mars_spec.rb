@@ -122,10 +122,10 @@ describe Mars do
         end
 
         it 'should leave a scent behind that does not allow other robots to follow' do
-          allow(robot).to receive(:position).and_return(loc, loc, loc, loc2)
+          allow(robot).to receive(:position).and_return(loc, loc, loc, loc, loc2)
           subject.move(instructions)
 
-          allow(robot).to receive(:position).and_return(loc, loc, loc, loc2)
+          expect(robot).to receive(:position).and_return(loc, loc, loc, loc, loc2)
           subject.set_robot(robot)
           subject.move(instructions)
 

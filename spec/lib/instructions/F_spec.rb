@@ -10,7 +10,7 @@ describe F do
 
   it 'should be able to move west' do
     position = double('Position', x: 1, y: 2, orientation: 'W')
-    expect(position).to receive(:set).with(2, 2, 'W')
+    expect(position).to receive(:set).with(0, 2, 'W')
     subject.execute(position)
   end
 
@@ -22,7 +22,7 @@ describe F do
 
   it 'should be able to move east' do
     position = double('Position', x: 1, y: 2, orientation: 'E')
-    expect(position).to receive(:set).with(0, 2, 'E')
+    expect(position).to receive(:set).with(2, 2, 'E')
     subject.execute(position)
   end
 end
