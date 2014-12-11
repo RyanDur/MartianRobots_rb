@@ -7,18 +7,72 @@ mars = Mars.new
 ins = Instructions.new
 stop = false
 
-puts 'please input a boundary for mars as two digits'
-x, y = gets.split
-mars.setup(x.to_i, y.to_i)
-until stop
+class String
+  def numeric?
+    Integer(gets) rescue nil
+  end
+end
+
+def get_boundary
+  puts 'please input a boundary for mars as two digits'
+  info = gets.split
+  if info.size < 2 || info.size > 2
+    raise ArgumentError, "#{info} is an incorrect boundary, please inout another"
+  end
+  x, y = info
+  unless x.numeric? || y.numeric?
+    raise ArgumentError, "#{x} and #{y}, is incorrect"
+  end
+  return x.to_i, y.to_i
+end
+
+
+def get_placement
   puts 'where would you like to place the robot'
-  x, y, orientation = gets.split
-  mars.set_robot(Robot.new(Position.new(x.to_i, y.to_i, orientation.upcase)))
+  info = gets.split
+  if info.size < 3 || info.size > 3 || !info[0].numeric? || !info[1].numeric? || info[2].numeric?
+    raise ArgumentError, "#{info} is an incorrect placement, please inout another"
+  end
+  x, y, orientation = info
+  return orientation, x.to_i, y.to_i
+end
+
+def get_instructions
   puts 'please input instructions'
-  instructions = gets
-  mars.move(ins.create(instructions.upcase.strip))
-  puts mars.report_position
-  puts 'would you like to stop?'
+  gets
+end
+
+def reset?
+  puts 'would you like to reset?'
   answer = gets
-  stop = true if 'y' == answer[0].downcase
+  'y' == answer[0].downcase
+end
+
+def quit?
+  puts 'would you like to quit?'
+  answer = gets
+  'y' == answer[0].downcase
+end
+
+until stop
+  begin
+    x, y = get_boundary
+    mars.setup(x, y)
+    reset = false
+    until reset || stop
+      begin
+        orientation, x, y = get_placement
+        mars.set_robot(Robot.new(Position.new(x, y, orientation.upcase)))
+        mars.move(ins.create(get_instructions.upcase.strip))
+        puts mars.report_position
+        reset = reset?
+        stop = quit? unless reset
+      rescue ArgumentError => e
+        puts e.message
+      end
+    end
+    stop = quit? unless stop
+  rescue ArgumentError => e
+    puts e.message
+  end
 end
