@@ -4,11 +4,7 @@ module Compass
   SOUTH = 'S'
   EAST = 'E'
 
-  def Compass.left(orientation)
-
-  end
-
-  def Compass.right(orientation)
-
+  def Compass.constants
+    [NORTH, WEST, SOUTH, EAST].freeze
   end
 end
