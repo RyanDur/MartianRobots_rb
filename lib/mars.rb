@@ -15,7 +15,7 @@ class Mars
   end
 
   def set_robot(robot)
-    raise ArgumentError if @out_of_bounds.(robot.location.x, robot.location.y)
+    raise ArgumentError if @out_of_bounds.(robot.position.x, robot.position.y)
     @robot = robot
     @lost = false
   end
@@ -36,7 +36,7 @@ class Mars
   def execute(instruction)
     robot = @robot.move(instruction)
     unless @scents.include? robot
-      if @out_of_bounds.(robot.location.x, robot.location.y)
+      if @out_of_bounds.(robot.position.x, robot.position.y)
         @lost = true
         @scents.push(@robot)
       else

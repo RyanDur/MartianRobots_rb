@@ -25,10 +25,6 @@ describe Position do
     it 'should override ==' do
       expect(subject == position2).to be(true)
     end
-
-    it 'should override eql?' do
-      expect(subject.eql?(position2)).to be(true)
-    end
   end
 
   context 'not equal' do
@@ -36,10 +32,6 @@ describe Position do
 
     it 'should override ==' do
       expect(subject == position2).to_not be(true)
-    end
-
-    it 'should override eql?' do
-      expect(subject.eql?(position2)).to_not be(true)
     end
   end
 

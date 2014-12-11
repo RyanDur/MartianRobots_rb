@@ -51,7 +51,7 @@ describe Mars do
 
   context '#set_robot' do
     let(:loc) { double('Position') }
-    let(:robot) { double('Robot', location: loc) }
+    let(:robot) { double('Robot', position: loc) }
     before(:each) { subject.setup(5, 3) }
 
     it 'should not allow a robot to be larger than the width of the boundary' do
@@ -78,7 +78,7 @@ describe Mars do
   context 'moving a robot' do
     context 'instructions' do
       let(:loc) { double('Position', x: 1, y: 1) }
-      let(:robot) { double('Robot', location: loc) }
+      let(:robot) { double('Robot', position: loc) }
       let(:ins1) {double('Instruction')}
       let(:ins2) {double('Instruction')}
       let(:ins3) {double('Instruction')}
@@ -109,16 +109,16 @@ describe Mars do
         end
 
         it 'should report the last position before lost' do
-          allow(robot).to receive(:location).and_return(loc, loc, loc, loc2)
+          allow(robot).to receive(:position).and_return(loc, loc, loc, loc2)
           subject.move(instructions)
           expect(subject.report_position).to eq("#{message} LOST")
         end
 
         it 'should leave a scent behind that does not allow other robots to follow' do
-          allow(robot).to receive(:location).and_return(loc, loc, loc, loc2)
+          allow(robot).to receive(:position).and_return(loc, loc, loc, loc2)
           subject.move(instructions)
 
-          allow(robot).to receive(:location).and_return(loc, loc, loc, loc2)
+          allow(robot).to receive(:position).and_return(loc, loc, loc, loc2)
           subject.set_robot(robot)
           subject.move(instructions)
 

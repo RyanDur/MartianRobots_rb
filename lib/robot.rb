@@ -1,7 +1,19 @@
 class Robot
-  attr_accessor :location
+  attr_accessor :position
 
-  def move instruction
+  def initialize(position)
+    @position = position
+  end
 
+  def move(instruction)
+    self.class.new(instruction.execute)
+  end
+
+  def ==(other)
+    @position == other.position
+  end
+
+  def to_s
+    @position.to_s
   end
 end

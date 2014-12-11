@@ -11,10 +11,6 @@ class Position
     self.class.new(x, y, orientation)
   end
 
-  def eql?(other)
-    self == other
-  end
-
   def ==(other)
     other.x == @x && other.y == @y
   end
