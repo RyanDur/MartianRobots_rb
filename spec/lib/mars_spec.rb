@@ -52,26 +52,33 @@ describe Mars do
   context '#set_robot' do
     let(:loc) { double('Position') }
     let(:robot) { double('Robot', position: loc) }
-    before(:each) { subject.setup(5, 3) }
+    before(:each) do
+      allow(robot).to receive(:to_s).and_return('hello')
+      subject.setup(5, 3)
+    end
 
     it 'should not allow a robot to be larger than the width of the boundary' do
       allow(loc).to receive_messages(x: 20, y: 1)
-      expect { subject.set_robot(robot) }.to raise_error ArgumentError
+      subject.set_robot(robot)
+      expect(subject.report_position).to eq 'LOST'
     end
 
     it 'should not allow a robot to be less than the minimum width of the boundary' do
       allow(loc).to receive_messages(x: -1, y: 1)
-      expect { subject.set_robot(robot) }.to raise_error ArgumentError
+      subject.set_robot(robot)
+      expect(subject.report_position).to eq 'LOST'
     end
 
     it 'should not allow a robot to be larger than the height of the boundary' do
       allow(loc).to receive_messages(x: 1, y: 10)
-      expect { subject.set_robot(robot) }.to raise_error ArgumentError
+      subject.set_robot(robot)
+      expect(subject.report_position).to eq 'LOST'
     end
 
     it 'should not allow a robot to be less than the minimum height of the boundary' do
       allow(loc).to receive_messages(x: -1, y: 1)
-      expect { subject.set_robot(robot) }.to raise_error ArgumentError
+      subject.set_robot(robot)
+      expect(subject.report_position).to eq 'LOST'
     end
   end
 
