@@ -8,6 +8,18 @@ class Position
   end
 
   def set(x, y, orientation)
-    self.new(x, y, orientation)
+    self.class.new(x, y, orientation)
+  end
+
+  def eql?(other)
+    self == other
+  end
+
+  def ==(other)
+    other.x == @x && other.y == @y
+  end
+
+  def to_s
+    "#{@x} #{@y} #{@orientation}"
   end
 end

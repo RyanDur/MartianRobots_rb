@@ -1,5 +1,4 @@
 require 'lang/max'
-require 'set'
 
 class Mars
   include Max
@@ -12,7 +11,7 @@ class Mars
     set_boundaries(@boundary.curry.(MAX_GRID_SIZE), @boundary.curry.(MAX_GRID_SIZE))
     raise ArgumentError if @out_of_bounds.(x, y)
     set_boundaries(@boundary.curry.(x), @boundary.curry.(y))
-    @scents = Set.new
+    @scents = []
   end
 
   def set_robot(robot)
@@ -39,7 +38,7 @@ class Mars
     unless @scents.include? robot
       if @out_of_bounds.(robot.location.x, robot.location.y)
         @lost = true
-        @scents.add(@robot)
+        @scents.push(@robot)
       else
         @robot = robot
       end
