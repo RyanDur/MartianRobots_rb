@@ -14,7 +14,7 @@ describe Robot do
   end
 
   it 'should return a new robot when moving' do
-    allow(instruction).to receive(:execute).and_return(position)
+    allow(instruction).to receive(:execute).with(position).and_return(position)
     robot2 = robot.move(instruction)
     expect(robot2).to_not be equal? robot
   end
@@ -45,7 +45,7 @@ describe Robot do
 
   it 'should be able to see if a list contains a similar position' do
     s = []
-    allow(instruction).to receive(:execute).and_return(position)
+    allow(instruction).to receive(:execute).with(position).and_return(position)
     allow(position).to receive(:==).and_return(true)
     other = robot.move(instruction)
     s.push(other)

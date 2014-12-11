@@ -6,7 +6,7 @@ class Robot
   end
 
   def move(instruction)
-    self.class.new(instruction.execute)
+    self.class.new(instruction.execute(@position))
   end
 
   def ==(other)
