@@ -4,12 +4,14 @@ require 'position'
 require 'robot'
 require 'instructions/F'
 require 'lang/max'
+require 'lang/messages'
 include Max
+include Messages
 
 describe Mars do
   context '#setup' do
     it "should not be wider than #{MAX_GRID_SIZE}" do
-      expect { subject.setup(MAX_GRID_SIZE + 1, 3) }.to raise_error ArgumentError
+      expect { subject.setup(MAX_GRID_SIZE + 1, 3) }.to raise_error ArgumentError, max_grid_size(MAX_GRID_SIZE + 1, 3)
     end
 
     it 'should not be thinner than 0' do
@@ -136,7 +138,7 @@ describe Mars do
 
     context '#set_robot' do
       it 'should not be able to input an invalid instruction size' do
-        expect { subject.move('F' * MAX_INSTRUCTION_SIZE) }.to raise_error ArgumentError
+        expect { subject.move('F' * MAX_INSTRUCTION_SIZE) }.to raise_error ArgumentError, too_long
       end
     end
   end

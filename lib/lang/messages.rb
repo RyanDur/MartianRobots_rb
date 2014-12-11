@@ -1,9 +1,22 @@
+require_relative 'max'
 module Messages
+  include Max
 
   def not_exist(name)
-    "#{name} #{MESSAGE}"
+    "#{name} #{NOT_EXIST}"
+  end
+
+  def too_long
+    TOO_LONG
+  end
+
+  def max_grid_size(x, y)
+    "#{x} by #{y} #{MAX_GRID_SIZE_VIOLATION}"
   end
 
   private
-  MESSAGE = 'does not exist'
+  
+  NOT_EXIST = 'does not exist'
+  TOO_LONG = "Instructions are too long, please keep it under #{MAX_INSTRUCTION_SIZE}"
+  MAX_GRID_SIZE_VIOLATION = "grid is invalid, both x and y need to be between 0 and #{MAX_GRID_SIZE}"
 end

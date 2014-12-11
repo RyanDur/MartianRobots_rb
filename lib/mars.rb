@@ -1,7 +1,9 @@
 require_relative 'lang/max'
+require_relative 'lang/messages'
 
 class Mars
   include Max
+  include Messages
 
   def initialize
     @boundary = lambda { |max, coord| coord > max || coord < 0 }
@@ -10,7 +12,7 @@ class Mars
 
   def setup(x, y)
     set_boundaries(@boundary.curry.(MAX_GRID_SIZE), @boundary.curry.(MAX_GRID_SIZE))
-    raise ArgumentError if @out_of_bounds.(x, y)
+    raise ArgumentError, max_grid_size(x, y) if @out_of_bounds.(x, y)
     set_boundaries(@boundary.curry.(x), @boundary.curry.(y))
     @scents = []
   end
@@ -30,7 +32,7 @@ class Mars
   end
 
   def move(instructions)
-    raise ArgumentError if instructions.size >= MAX_INSTRUCTION_SIZE
+    raise ArgumentError, too_long if instructions.size >= MAX_INSTRUCTION_SIZE
     until instructions.empty? || lost?
       robot = @robot.move(instructions.shift)
       set_robot(robot) unless @scents.include? robot.position
