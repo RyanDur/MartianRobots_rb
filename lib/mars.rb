@@ -19,10 +19,10 @@ class Mars
 
   def set_robot(robot)
     if @out_of_bounds.(robot.position.x, robot.position.y)
-      set_lost(true)
+      @lost = LOST
       @scents.push(robot.position)
     else
-      set_lost(false)
+      @lost = NOT_LOST
       @robot = robot
     end
   end
@@ -42,11 +42,7 @@ class Mars
   private
 
   def lost?
-    @lost == 'LOST'
-  end
-
-  def set_lost(lost)
-    lost ? @lost = 'LOST' : @lost = nil
+    @lost == LOST
   end
 
   def set_boundaries(max_width, max_height)

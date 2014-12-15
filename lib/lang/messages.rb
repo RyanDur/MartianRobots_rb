@@ -1,6 +1,8 @@
 require_relative 'max'
 module Messages
   include Max
+  LOST = 'LOST'
+  NOT_LOST = nil
 
   def not_exist(name)
     "#{name} #{NOT_EXIST}"
