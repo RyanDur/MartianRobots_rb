@@ -2,10 +2,17 @@ require_relative '../lang/compass'
 class F
   include Compass
 
+  ##
+  # The instruction takes in a position and translates it into another but taking the xy corrdinates
+  # moving it forward based on the orientation.
+  #
+  # @param [Position] position
+  # @return [Position]
   def execute(position)
-    return position.set(position.x, position.y + 1, position.orientation) if (NORTH == position.orientation)
-    return position.set(position.x - 1, position.y, position.orientation) if (WEST == position.orientation)
-    return position.set(position.x, position.y - 1, position.orientation) if (SOUTH == position.orientation)
-    position.set(position.x + 1, position.y, position.orientation)
+    x, y, orientation = position.x, position.y, position.orientation
+    return position.set(x, y + 1, orientation) if (NORTH == orientation)
+    return position.set(x - 1, y, orientation) if (WEST == orientation)
+    return position.set(x, y - 1, orientation) if (SOUTH == orientation)
+    position.set(x + 1, y, orientation)
   end
 end
