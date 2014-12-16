@@ -10,6 +10,12 @@ class Mars
     @robot = nil
   end
 
+  ##
+  # setup the surface of mars. checks to make sure that the bounds given ar not larger than the max grid size
+  #
+  # @param [Integer] x
+  # @param [Integer] y
+  # @raise [ArgumentError] if the given bounds violate the max grid size
   def setup(x, y)
     set_boundaries(@boundary.curry.(MAX_GRID_SIZE), @boundary.curry.(MAX_GRID_SIZE))
     raise ArgumentError, max_grid_size(x, y) if @out_of_bounds.(x, y)
@@ -17,6 +23,10 @@ class Mars
     @scents = []
   end
 
+  ##
+  # Set a robot onto mars
+  #
+  # @param [Robot] robot
   def set_robot(robot)
     if @out_of_bounds.(robot.position.x, robot.position.y)
       @lost = LOST
@@ -27,10 +37,18 @@ class Mars
     end
   end
 
+  ##
+  # reports the position of the robot and if it is lost
+  #
+  # @return [String]
   def report_position
     "#{@robot} #{@lost}".strip
   end
 
+  ##
+  # takes an array of instructions and sends each instruction to the robot
+  #
+  # @param [Array] instructions
   def move(instructions)
     raise ArgumentError, too_long if instructions.size >= MAX_INSTRUCTION_SIZE
     until instructions.empty? || lost?
