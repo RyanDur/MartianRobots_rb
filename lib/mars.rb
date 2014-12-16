@@ -33,8 +33,8 @@ class Mars
       @scents.push(robot.position)
     else
       @lost = NOT_LOST
+      @robot = robot
     end
-    @robot = robot
   end
 
   ##

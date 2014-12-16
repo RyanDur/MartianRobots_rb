@@ -20,7 +20,7 @@ class Robot
   end
 
   ##
-  # retruns the position of the robot as a string
+  # returns the position of the robot as a string
   #
   # @return [String]
   def to_s

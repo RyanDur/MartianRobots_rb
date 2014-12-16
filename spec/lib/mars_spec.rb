@@ -64,25 +64,25 @@ describe Mars do
     it 'should not allow a robot to be larger than the width of the boundary' do
       allow(loc).to receive_messages(x: 20, y: 1)
       subject.set_robot(robot)
-      expect(subject.report_position).to eq "#{message} LOST"
+      expect(subject.report_position).to eq 'LOST'
     end
 
     it 'should not allow a robot to be less than the minimum width of the boundary' do
       allow(loc).to receive_messages(x: -1, y: 1)
       subject.set_robot(robot)
-      expect(subject.report_position).to eq "#{message} LOST"
+      expect(subject.report_position).to eq 'LOST'
     end
 
     it 'should not allow a robot to be larger than the height of the boundary' do
       allow(loc).to receive_messages(x: 1, y: 10)
       subject.set_robot(robot)
-      expect(subject.report_position).to eq "#{message} LOST"
+      expect(subject.report_position).to eq 'LOST'
     end
 
     it 'should not allow a robot to be less than the minimum height of the boundary' do
       allow(loc).to receive_messages(x: -1, y: 1)
       subject.set_robot(robot)
-      expect(subject.report_position).to eq "#{message} LOST"
+      expect(subject.report_position).to eq 'LOST'
     end
   end
 
