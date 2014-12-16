@@ -14,7 +14,6 @@ def get_boundary
   return x.to_i, y.to_i
 end
 
-
 def get_placement
   puts 'where would you like to place the robot'
   info = gets.split

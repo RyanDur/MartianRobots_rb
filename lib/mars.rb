@@ -49,6 +49,7 @@ class Mars
   # takes an array of instructions and sends each instruction to the robot
   #
   # @param [Array] instructions
+  # @raise [ArgumentError] if instruction size is larger or equal to the max instruction size
   def move(instructions)
     raise ArgumentError, too_long if instructions.size >= MAX_INSTRUCTION_SIZE
     until instructions.empty? || lost?
