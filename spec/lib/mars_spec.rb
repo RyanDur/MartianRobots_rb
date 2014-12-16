@@ -9,6 +9,8 @@ include Max
 include Messages
 
 describe Mars do
+  message = 'hello'
+
   context '#setup' do
     it "should not be wider than #{MAX_GRID_SIZE}" do
       expect { subject.setup(MAX_GRID_SIZE + 1, 3) }.to raise_error ArgumentError, max_grid_size(MAX_GRID_SIZE + 1, 3)
@@ -62,25 +64,25 @@ describe Mars do
     it 'should not allow a robot to be larger than the width of the boundary' do
       allow(loc).to receive_messages(x: 20, y: 1)
       subject.set_robot(robot)
-      expect(subject.report_position).to eq 'LOST'
+      expect(subject.report_position).to eq "#{message} LOST"
     end
 
     it 'should not allow a robot to be less than the minimum width of the boundary' do
       allow(loc).to receive_messages(x: -1, y: 1)
       subject.set_robot(robot)
-      expect(subject.report_position).to eq 'LOST'
+      expect(subject.report_position).to eq "#{message} LOST"
     end
 
     it 'should not allow a robot to be larger than the height of the boundary' do
       allow(loc).to receive_messages(x: 1, y: 10)
       subject.set_robot(robot)
-      expect(subject.report_position).to eq 'LOST'
+      expect(subject.report_position).to eq "#{message} LOST"
     end
 
     it 'should not allow a robot to be less than the minimum height of the boundary' do
       allow(loc).to receive_messages(x: -1, y: 1)
       subject.set_robot(robot)
-      expect(subject.report_position).to eq 'LOST'
+      expect(subject.report_position).to eq "#{message} LOST"
     end
   end
 
@@ -92,7 +94,6 @@ describe Mars do
       let(:ins2) {double('F')}
       let(:ins3) {double('F')}
       let(:instructions) {[ins1, ins2, ins3]}
-      message = 'hello'
 
       before(:each) {
         allow(robot).to receive(:move).with(any_args).and_return(robot)
