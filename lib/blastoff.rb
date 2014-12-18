@@ -7,17 +7,26 @@ mars = Mars.new
 ins = Instructions.new
 quit = false
 
-def get_boundary
-  puts 'please input a boundary for mars as two digits'
+def is_numeric?(s)
+  !!Float(s) rescue false
+end
+
+def get_input(message, bound)
+  puts message
   info = gets.split
-  x, y = info
+  raise ArgumentError unless info.size == bound
+  info
+end
+
+def get_boundary
+  x, y = get_input('please input a boundary for mars as two digits', 2)
+  raise ArgumentError unless is_numeric?(x) && is_numeric?(y)
   return x.to_i, y.to_i
 end
 
 def get_placement
-  puts 'where would you like to place the robot'
-  info = gets.split
-  x, y, orientation = info
+  x, y, orientation = get_input('where would you like to place the robot', 3)
+  raise ArgumentError unless is_numeric?(x) && is_numeric?(y)
   return orientation, x.to_i, y.to_i
 end
 
